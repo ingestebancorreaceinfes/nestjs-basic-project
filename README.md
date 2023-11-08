@@ -1,73 +1,169 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+<p  align="center">
+<a  href="http://nestjs.com/"  target="blank"><img  src="https://nestjs.com/img/logo-small.svg"  width="200"  alt="Nest Logo"  /></a>
 </p>
 
+  
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  
 
-## Description
+  
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
 
-## Installation
+  
+
+[![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+  
+
+  
+
+## Descripción
+
+  
+
+  
+
+Módulo para consulta de productos (category material)  y aplicaciones (type material).   
+
+  
+
+### Requerimientos de software
+
+Se debe tener instalados los siguientes programas
+
+- Node js
+
+- npm
+
+- Se debe tener instalado previamente docker y haber subido el servicio de traefik para haceptar servicios posteriormente
+
+### Configuración previa del proyecto
+
+En el repositorio se encontrarán tres archivos de ejemplo con extensión .sample para crear la imagen de docker y posteriormente el contenedor. Estos archivos se deben renombrar y remover la extensión .sample
+
+- .env.example
+
+- Dockerfile.example
+
+- docker-compose.yml.example
+
+  
+
+Cada archivo en la mayoría de variables tiene dos carácteres {} que encierran la explicación de lo que debe contener cada variable y ser reemplazados por este contenido. Por ejemplo en el archivo .env.example
+
+  
 
 ```bash
-$ npm install
+
+DB_HOST={host  de  la  base  de  datos}
+
 ```
 
-## Running the app
+Cambiar {host de la base de datos} cambiar por el host correspondiente.
 
 ```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+DB_HOST=192.168.1.16  por  ejemplo
 
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+Reemplazar el nombre .env.example por .env  y hacer esto mismo con los archivos restantes
+
+  
+  
+
+### Despliegue como servicio de docker swarm
+
+  
+
+Para el despliegue se debe, en primera instancia, verificar que el proyecto esté en la rama master, seguidamente hacer un pull de los cambios de la rama master, luego hacer instalación de dependencias, a continuación generar el build del proyecto. Una vez terminado el proceso se debe hacer build del archivo Dockerfile para generar la imagen docker y por último ejecutar el comendo de docker stack para ejecutar el contenedor como servicio de traefik.
+
+A continuación se muestran los comandos a ejecutar en orden
 
 ```bash
-# unit tests
-$ npm run test
+# Verificar que se esté en la rama master.
+# Si no está en la rama master cambiar la rama con el siguiente comando sudo git checkout master
+$  sudo  git  branch
+*master
 
-# e2e tests
-$ npm run test:e2e
+$  sudo  git  pull
 
-# test coverage
-$ npm run test:cov
+$  sudo  npm  install
+
+$  sudo  npm  run  build
+
 ```
 
-## Support
+Para generar la imagen docker del proyecto el comando solicita un tag formado por un nombre seguido de : y una versión.  Por ejemplo: 
+- nombrerepresentativoparalaimagen:v1.0. 
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+El comando quedaría como sigue:
 
-## Stay in touch
+```bash
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+sudo  docker  build  -t  nombrerepresentativoparalaimagen:v1.0  .
 
-## License
+```
 
-Nest is [MIT licensed](LICENSE).
+<strong>Nota:</strong> No olvidar el <strong>.</strong> al final el comando, este punto indica que el archivo Dockerfile está ubicado en esa misma carpeta.
+
+<strong>Nota:</strong> Una vez generada la imagen docker, se debe modificar el archivo docker-compose.yml y reemplazar las llaves {nombre de la imagen a usar} de la variable image por el tag de la imagen generada, que en este ejemplo sería nombrerepresentativoparalaimagen:v1.0
+
+Reemplazar:
+
+```bash
+
+version: '3.3'
+
+  
+
+services:
+
+dev:
+
+image: {nombre de la imagen a usar}
+
+.
+
+.
+
+.
+
+```
+
+Por:
+
+```bash
+
+version: '3.3'
+
+  
+
+services:
+
+dev:
+
+image: nombrerepresentativoparalaimagen:v1.0
+
+.
+
+.
+
+.
+
+```
+
+Por último ejecutar el comando para generar el servicio para traefik
+
+```bash
+
+$  sudo docker  stack  deploy  -c  docker-compose.yml  {nombre  de  servicio}
+
+```
+
+<strong>Nota:</strong> reemplazar {nombre de servicio} por el nombre por el cuál se conocerá el servicio
+Prueba 12/09/2023 ------------
