@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  dev:
+    image: {nombre de la imagen a usar}
+    volumes:
+      - ./dist/:/usr/share/nginx/html/dist
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network={Network con swarm configurado}
+        - traefik.constraint-label={Network con swarm configurado}
+        - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+        - traefik.http.routers.logindev.rule=Host(`{dominio que se usará para la aplicación}`)
+        - traefik.http.routers.logindev.entrypoints={Entrypoint configurado en traefik para web no segura http}
+        - traefik.http.routers.logindev.middlewares=https-redirect
+        - traefik.http.routers.logindevs.rule=Host(`{dominio que se usará para la aplicación}`)
+        - traefik.http.routers.logindevs.entrypoints={Entrypoint configurado en traefik para web segura https}
+        - traefik.http.routers.logindevs.tls=true
+        - traefik.http.services.logindev.loadbalancer.server.port={puerto del docker a usar y configurado en Dockerfile y archivo .env}
+    env_file:
+      - .env
+    networks:
+      - {Network con swarm configurado}
+networks:
+  {Network con swarm configurado}:
+    external: true
+

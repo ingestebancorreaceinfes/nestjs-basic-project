@@ -1,0 +1,15 @@
+FROM node:18.15.0-alpine as production
+
+WORKDIR /usr/src/app 
+
+COPY package*.json ./
+#COPY cert.pem ./
+#COPY key.pem ./
+
+RUN npm install --only=production
+
+COPY . . 
+
+#RUN npm run build
+
+CMD ["node", "dist/main","--host"]
